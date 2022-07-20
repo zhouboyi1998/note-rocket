@@ -1,39 +1,114 @@
-# note-rocket
+<h1 align="center">📔 note-rocket</h1>
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+<p align="center">
+<a target="_blank" href="https://github.com/zhouboyi1998/note-rocket"> 
+<img src="https://img.shields.io/github/stars/zhouboyi1998/note-rocket?logo=github">
+</a>
+<a target="_blank" href="https://opensource.org/licenses/MIT"> 
+<img src="https://img.shields.io/badge/license-MIT-red"> 
+</a> 
+<img src="https://img.shields.io/badge/Rust-1.61.0-orange">
+<img src="https://img.shields.io/badge/Rocket-0.5.0 rc.2-red">
+<img src="https://img.shields.io/badge/Diesel-1.4.8-red">
+</p>
 
-#### 软件架构
-软件架构说明
+### 📖 语言
 
+简体中文 | [English](./README.en.md)
 
-#### 安装教程
+### ⌛ 开始
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### Windows 安装 diesel_cli
 
-#### 使用说明
+* 安装 `diesel_cli` (只安装 `SQLite` 数据库的 `diesel_cli`)
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+```bash
+cargo install diesel_cli --no-default-features --features sqlite-bundled
+```
 
-#### 参与贡献
+#### 打包 sqlite3.lib
+* 在 `Visual Studio` 安装目录下找到类似以下路径的目录
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+```
+D:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64
+```
 
+* 复制 `x64` 文件夹到任意目录下
+* 将 `SQLite` 安装目录下的 `sqlite3.def` 文件复制到新的 `x64` 文件夹中
+* 在 `x64` 目录下执行以下命令
+    * 打包 `sqlite3.lib`
 
-#### 特技
+```bash
+lib /DEF:sqlite3.def /MACHINE:X64
+```
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+* 将生成的 `sqlite3.lib` 文件和 `sqlite3.exp` 文件复制到 `SQLite` 安装目录下
+* 在 `SQLite` 安装目录下，使用 `PowerShell` 执行以下命令
+    * 将 `sqlite3.dll` 文件和 `sqlite3.lib` 文件复制到 `.rustup` 目录下
+    * 根据使用的 `Rust` 工具链版本，复制到 `stable` 或 `nightly` 对应的目录下
+
+```bash
+# use rust toolchain stable version
+cp sqlite3.lib c:\Users\11441\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\lib\sqlite3.lib
+cp sqlite3.dll c:\Users\11441\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin\sqlite3.dll
+
+# use rust toolchain nightly version
+cp sqlite3.lib c:\Users\11441\.rustup\toolchains\nightly-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\lib\sqlite3.lib
+cp sqlite3.dll c:\Users\11441\.rustup\toolchains\nightly-x86_64-pc-windows-msvc\bin\sqlite3.dll
+```
+
+#### 生成 SQLite 数据库文件
+
+* 在项目根目录下执行以下命令
+* 使用 `diesel` 创建项目对应的 `SQLite` 数据库文件
+
+```bash
+diesel setup --database-url=database.sqlite
+```
+
+* 创建存放 `diesel SQL` 的文件夹
+
+```bash
+diesel migration generate create_card
+```
+
+* `up.sql` 中写创建表的操作，项目启动时执行
+
+```sql
+CREATE TABLE note_card (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR NOT NULL,
+    content VARCHAR NOT NULL,
+    tip VARCHAR NOT NULL,
+    extra VARCHAR NOT NULL,
+    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
+```
+
+* `down.sql` 中写删除表的操作，项目停止时执行
+
+```sql
+DROP TABLE note_card
+```
+
+* 创建 `schema.rs` 文件
+
+```bash
+diesel migration run --database-url=database.sqlite
+```
+
+#### 运行
+
+```bash
+cargo run
+```
+
+#### 构建
+
+```bash
+cargo build
+```
+
+### 📜 开源协议
+
+[MIT License](https://opensource.org/licenses/MIT) Copyright (c) 2022 周博义

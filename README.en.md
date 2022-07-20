@@ -1,36 +1,114 @@
-# note-rocket
+<h1 align="center">📔 note-rocket</h1>
 
-#### Description
-{**When you're done, you can delete the content in this README and update the file with details for others getting started with your repository**}
+<p align="center">
+<a target="_blank" href="https://github.com/zhouboyi1998/note-rocket"> 
+<img src="https://img.shields.io/github/stars/zhouboyi1998/note-rocket?logo=github">
+</a>
+<a target="_blank" href="https://opensource.org/licenses/MIT"> 
+<img src="https://img.shields.io/badge/license-MIT-red"> 
+</a> 
+<img src="https://img.shields.io/badge/Rust-1.61.0-orange">
+<img src="https://img.shields.io/badge/Rocket-0.5.0 rc.2-red">
+<img src="https://img.shields.io/badge/Diesel-1.4.8-red">
+</p>
+### 📖 Language
 
-#### Software Architecture
-Software architecture description
+[简体中文](./README.md) | English
 
-#### Installation
+### ⌛ Start
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### Windows install diesel_cli
 
-#### Instructions
+* Install `diesel_cli` (Only install `diesel_cli` for `SQLite` database)
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+```bash
+cargo install diesel_cli --no-default-features --features sqlite-bundled
+```
 
-#### Contribution
+#### Package sqlite3.lib
+* Find a directory similar to the following path in the `Visual Studio` installation directory
 
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+```
+D:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64
+```
+
+* Copy `x64` folder to any directory
+* Copy the `sqlite3.def` file from the `SQLite` installation directory to the new `x64` folder
+* Run the command in the 'x64' directory
+    * Package `sqlite3.lib`
+
+```bash
+lib /DEF:sqlite3.def /MACHINE:X64
+```
+
+* Copy the generated `sqlite3.lib` and `sqlite3.exp` files to the `SQLite` installation directory
+* In the `SQLite` installation directory, run the command using `PowerShell`
+    * Copy the `sqlite3.dll` and `sqlite3.lib` files to the `.rustup` directory
+    * Copy to `stable` or `nightly`, depending on the version of the `Rust` toolchain in use
+
+```bash
+# use rust toolchain stable version
+cp sqlite3.lib c:\Users\11441\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\lib\sqlite3.lib
+cp sqlite3.dll c:\Users\11441\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin\sqlite3.dll
+
+# use rust toolchain nightly version
+cp sqlite3.lib c:\Users\11441\.rustup\toolchains\nightly-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\lib\sqlite3.lib
+cp sqlite3.dll c:\Users\11441\.rustup\toolchains\nightly-x86_64-pc-windows-msvc\bin\sqlite3.dll
+```
+
+#### Generate SQLite database file
+
+* Run the command in the project root directory
+* Use `diesel` to create the project's corresponding `SQLite` database file
+
+```bash
+diesel setup --database-url=database.sqlite
+```
+
+* Create the folder for `diesel SQL`
+
+```bash
+diesel migration generate create_card
+```
+
+* Write the create table operation in `up.sql` and the SQL execute when the project start
+
+```sql
+CREATE TABLE note_card (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR NOT NULL,
+    content VARCHAR NOT NULL,
+    tip VARCHAR NOT NULL,
+    extra VARCHAR NOT NULL,
+    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
+```
+
+* Write the drop table operation in `down.sql` and the SQL execute when the project stop
+
+```sql
+DROP TABLE note_card
+```
+
+* Create `schema.rs` file
+
+```bash
+diesel migration run --database-url=database.sqlite
+```
+
+#### Run
+
+```bash
+cargo run
+```
+
+#### Build
+
+```bash
+cargo build
+```
 
 
-#### Gitee Feature
+### 📜 Licence
 
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+[MIT License](https://opensource.org/licenses/MIT) Copyright (c) 2022 周博义
