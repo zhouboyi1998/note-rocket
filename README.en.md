@@ -7,9 +7,9 @@
 <a target="_blank" href="https://opensource.org/licenses/MIT"> 
 <img src="https://img.shields.io/badge/license-MIT-red"> 
 </a> 
-<img src="https://img.shields.io/badge/Go-1.18-darkturquoise">
-<img src="https://img.shields.io/badge/Gin-1.8.0-dodgerblue">
-<img src="https://img.shields.io/badge/MongoDB Go Driver-1.9.1-seagreen">
+<img src="https://img.shields.io/badge/Rust-1.61.0-orange">
+<img src="https://img.shields.io/badge/Rocket-0.5.0 rc.2-red">
+<img src="https://img.shields.io/badge/Diesel-1.4.8-red">
 </p>
 ### 📖 Language
 
