@@ -1,4 +1,4 @@
-<h1 align="center">📔 note-gin</h1>
+<h1 align="center">📔 note-rocket</h1>
 
 <p align="center">
 <a target="_blank" href="https://github.com/zhouboyi1998/note-rocket"> 
