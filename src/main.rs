@@ -1,41 +1,28 @@
-use rocket::{
-    catch, catchers, delete, get, launch, post, put, routes,
-    serde::json::{serde_json::json, Value},
-};
+#[macro_use]
+extern crate diesel;
+#[macro_use]
+extern crate rocket;
 
-#[get("/")]
-async fn list() -> Value {
-    json!("list")
-}
-
-#[get("/<id>")]
-async fn one(id: i32) -> Value {
-    json!(format!("one {}", id))
-}
-
-#[post("/")]
-async fn insert() -> Value {
-    json!("insert")
-}
-
-#[put("/")]
-async fn update() -> Value {
-    json!("update")
-}
-
-#[delete("/<id>")]
-async fn delete(id: i32) -> Value {
-    json!(format!("delete {}", id))
-}
-
-#[catch(404)]
-async fn not_found() -> Value {
-    json!("URL Not Found!")
-}
+mod controller;
+mod model;
+mod repository;
+mod schema;
+mod util;
+mod constant;
 
 #[launch]
 async fn rocket() -> _ {
     rocket::build()
-        .mount("/product", routes![list, one, insert, update, delete])
-        .register("/", catchers!(not_found))
+        .mount("/card", routes![
+            controller::card::list,
+            controller::card::one,
+            controller::card::insert,
+            controller::card::insert_batch,
+            controller::card::update,
+            controller::card::update_batch,
+            controller::card::delete,
+            controller::card::delete_batch,
+        ])
+        .register("/", catchers!(controller::card::not_found))
+        .attach(controller::card::Connection::fairing())
 }
