@@ -1,7 +1,8 @@
-use crate::schema::note_card;
 use rocket::serde::{Deserialize, Serialize};
 
-// 标准 Model
+use crate::schema::note_card;
+
+// Standard Model
 #[derive(Queryable, Deserialize, Serialize, AsChangeset)]
 #[serde(crate = "rocket::serde")]
 #[table_name = "note_card"]
