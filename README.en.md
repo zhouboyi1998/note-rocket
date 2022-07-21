@@ -11,13 +11,14 @@
 <img src="https://img.shields.io/badge/Rocket-0.5.0 rc.2-red">
 <img src="https://img.shields.io/badge/Diesel-1.4.8-red">
 </p>
+
 ### 📖 Language
 
 [简体中文](./README.md) | English
 
 ### ⌛ Start
 
-#### Windows install diesel_cli
+#### Install diesel_cli
 
 * Install `diesel_cli` (Only install `diesel_cli` for `SQLite` database)
 
@@ -25,7 +26,7 @@
 cargo install diesel_cli --no-default-features --features sqlite-bundled
 ```
 
-#### Package sqlite3.lib
+#### Windows compile sqlite3.lib
 * Find a directory similar to the following path in the `Visual Studio` installation directory
 
 ```
@@ -35,7 +36,7 @@ D:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.
 * Copy `x64` folder to any directory
 * Copy the `sqlite3.def` file from the `SQLite` installation directory to the new `x64` folder
 * Run the command in the 'x64' directory
-    * Package `sqlite3.lib`
+    * Compile `sqlite3.lib`
 
 ```bash
 lib /DEF:sqlite3.def /MACHINE:X64
@@ -102,12 +103,17 @@ diesel migration run --database-url=database.sqlite
 cargo run
 ```
 
-#### Build
+#### Debug build
 
 ```bash
 cargo build
 ```
 
+#### Release build
+
+```bash
+cargo build --release
+```
 
 ### 📜 Licence
 

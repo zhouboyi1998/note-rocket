@@ -1,3 +1,5 @@
+use rocket::http::Status;
+use rocket::response::status;
 use rocket::serde::json::{serde_json::json, Json, Value};
 use rocket_sync_db_pools::database;
 
@@ -8,51 +10,62 @@ use crate::repository::card::CardRepositiry;
 pub struct Connection(diesel::SqliteConnection);
 
 #[get("/")]
-pub async fn list(connention: Connection) -> Value {
+pub async fn list(connention: Connection) -> Result<Value, status::Custom<Value>> {
     connention
         .run(|c| {
-            let result = CardRepositiry::list(c).expect("Error list");
-            json!(result)
+            CardRepositiry::list(c)
+                .map(|result| json!(result))
+                .map_err(|e| status::Custom(Status::InternalServerError, json!(e.to_string())))
         })
         .await
 }
 
 #[get("/<id>")]
-pub async fn one(connention: Connection, id: i32) -> Value {
+pub async fn one(connention: Connection, id: i32) -> Result<Value, status::Custom<Value>> {
     connention
         .run(move |c| {
-            let result = CardRepositiry::one(c, id).expect("Error get");
-            json!(result)
+            CardRepositiry::one(c, id)
+                .map(|result| json!(result))
+                .map_err(|e| status::Custom(Status::InternalServerError, json!(e.to_string())))
         })
         .await
 }
 
 #[post("/", format = "json", data = "<new_card>")]
-pub async fn insert(connention: Connection, new_card: Json<NewCard>) -> Value {
+pub async fn insert(
+    connention: Connection,
+    new_card: Json<NewCard>,
+) -> Result<Value, status::Custom<Value>> {
     connention
         .run(|c| {
-            let result = CardRepositiry::insert(c, new_card.into_inner()).expect("Error insert");
-            json!(result)
+            CardRepositiry::insert(c, new_card.into_inner())
+                .map(|result| json!(result))
+                .map_err(|e| status::Custom(Status::InternalServerError, json!(e.to_string())))
         })
         .await
 }
 
 #[put("/", format = "json", data = "<card>")]
-pub async fn update(connention: Connection, card: Json<Card>) -> Value {
+pub async fn update(
+    connention: Connection,
+    card: Json<Card>,
+) -> Result<Value, status::Custom<Value>> {
     connention
         .run(move |c| {
-            let result = CardRepositiry::update(c, card.into_inner()).expect("Error update");
-            json!(result)
+            CardRepositiry::update(c, card.into_inner())
+                .map(|result| json!(result))
+                .map_err(|e| status::Custom(Status::InternalServerError, json!(e.to_string())))
         })
         .await
 }
 
 #[delete("/<id>")]
-pub async fn delete(connention: Connection, id: i32) -> Value {
+pub async fn delete(connention: Connection, id: i32) -> Result<Value, status::Custom<Value>> {
     connention
         .run(move |c| {
-            let result = CardRepositiry::delete(c, id).expect("Error delete");
-            json!(result)
+            CardRepositiry::delete(c, id)
+                .map(|result| json!(result))
+                .map_err(|e| status::Custom(Status::InternalServerError, json!(e.to_string())))
         })
         .await
 }
