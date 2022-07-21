@@ -71,7 +71,7 @@ diesel setup --database-url=database.sqlite
 diesel migration generate create_card
 ```
 
-* Write the create table operation in `up.sql` and the SQL execute when the project start
+* Write the create table operation in `up.sql`
 
 ```sql
 CREATE TABLE note_card (
@@ -84,7 +84,7 @@ CREATE TABLE note_card (
 )
 ```
 
-* Write the drop table operation in `down.sql` and the SQL execute when the project stop
+* Write the drop table operation in `down.sql`
 
 ```sql
 DROP TABLE note_card

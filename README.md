@@ -72,7 +72,7 @@ diesel setup --database-url=database.sqlite
 diesel migration generate create_card
 ```
 
-* `up.sql` 中写创建表的操作，项目启动时执行
+* `up.sql` 中写创建表的操作
 
 ```sql
 CREATE TABLE note_card (
@@ -85,7 +85,7 @@ CREATE TABLE note_card (
 )
 ```
 
-* `down.sql` 中写删除表的操作，项目停止时执行
+* `down.sql` 中写删除表的操作
 
 ```sql
 DROP TABLE note_card
