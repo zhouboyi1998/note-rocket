@@ -2,6 +2,8 @@
 name = "note-rocket"
 version = "0.1.0"
 edition = "2021"
+authors = ["zhouboyi<1144188685@qq.com>"]
+license = "MIT"
 
 [dependencies]
 rocket = { version = "0.5.0-rc.2", features = ["json"] }
