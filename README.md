@@ -18,7 +18,7 @@
 
 ### ⌛ 开始
 
-#### Windows 安装 diesel_cli
+#### 安装 diesel_cli
 
 * 安装 `diesel_cli` (只安装 `SQLite` 数据库的 `diesel_cli`)
 
@@ -26,7 +26,7 @@
 cargo install diesel_cli --no-default-features --features sqlite-bundled
 ```
 
-#### 打包 sqlite3.lib
+#### Windows 编译 sqlite3.lib
 * 在 `Visual Studio` 安装目录下找到类似以下路径的目录
 
 ```
@@ -36,7 +36,7 @@ D:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.
 * 复制 `x64` 文件夹到任意目录下
 * 将 `SQLite` 安装目录下的 `sqlite3.def` 文件复制到新的 `x64` 文件夹中
 * 在 `x64` 目录下执行以下命令
-    * 打包 `sqlite3.lib`
+    * 编译 `sqlite3.lib`
 
 ```bash
 lib /DEF:sqlite3.def /MACHINE:X64
@@ -103,10 +103,16 @@ diesel migration run --database-url=database.sqlite
 cargo run
 ```
 
-#### 构建
+#### 调试构建
 
 ```bash
 cargo build
+```
+
+#### 发布构建
+
+```bash
+cargo build --release
 ```
 
 ### 📜 开源协议
