@@ -1,6 +1,6 @@
 table! {
     note_card (id) {
-        id -> Integer,
+        id -> BigInt,
         title -> Text,
         content -> Text,
         tip -> Text,

@@ -7,6 +7,8 @@ mod controller;
 mod model;
 mod repository;
 mod schema;
+mod util;
+mod constant;
 
 #[launch]
 async fn rocket() -> _ {

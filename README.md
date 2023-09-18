@@ -2,14 +2,14 @@
 
 <p align="center">
 <a target="_blank" href="https://github.com/zhouboyi1998/note-rocket"> 
-<img src="https://img.shields.io/github/stars/zhouboyi1998/note-rocket?logo=github">
+<img src="https://img.shields.io/github/stars/zhouboyi1998/note-rocket?logo=github" alt="">
 </a>
 <a target="_blank" href="https://opensource.org/licenses/MIT"> 
-<img src="https://img.shields.io/badge/license-MIT-red"> 
+<img src="https://img.shields.io/badge/license-MIT-red" alt=""> 
 </a> 
-<img src="https://img.shields.io/badge/Rust-1.61.0-orange">
-<img src="https://img.shields.io/badge/Rocket-0.5.0 rc.2-red">
-<img src="https://img.shields.io/badge/Diesel-1.4.8-red">
+<img src="https://img.shields.io/badge/Rust-1.61.0-orange" alt="">
+<img src="https://img.shields.io/badge/Rocket-0.5.0 rc.2-red" alt="">
+<img src="https://img.shields.io/badge/Diesel-1.4.8-red" alt="">
 </p>
 
 ### 📖 语言
@@ -27,6 +27,7 @@ cargo install diesel_cli --no-default-features --features sqlite-bundled
 ```
 
 #### Windows 编译 sqlite3.lib
+
 * 在 `Visual Studio` 安装目录下找到类似以下路径的目录
 
 ```
@@ -75,13 +76,14 @@ diesel migration generate create_card
 * `up.sql` 中写创建表的操作
 
 ```sql
-CREATE TABLE note_card (
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    title VARCHAR NOT NULL,
-    content VARCHAR NOT NULL,
-    tip VARCHAR NOT NULL,
-    extra VARCHAR NOT NULL,
-    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE note_card
+(
+    id          BIGINT PRIMARY KEY NOT NULL,
+    title       VARCHAR            NOT NULL,
+    content     VARCHAR            NOT NULL,
+    tip         VARCHAR            NOT NULL,
+    extra       VARCHAR            NOT NULL,
+    create_time TIMESTAMP          NOT NULL
 )
 ```
 
