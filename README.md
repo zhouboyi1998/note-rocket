@@ -36,26 +36,46 @@ D:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.
 
 * 复制 `x64` 文件夹到任意目录下
 * 将 `SQLite` 安装目录下的 `sqlite3.def` 文件复制到新的 `x64` 文件夹中
-* 在 `x64` 目录下执行以下命令
-    * 编译 `sqlite3.lib`
+* 在 `x64` 目录下执行命令编译 `sqlite3.lib`
 
 ```bash
 lib /DEF:sqlite3.def /MACHINE:X64
 ```
 
-* 将生成的 `sqlite3.lib` 文件和 `sqlite3.exp` 文件复制到 `SQLite` 安装目录下
+* 将编译后的 `sqlite3.lib` 文件和 `sqlite3.exp` 文件复制回 `SQLite` 安装目录下
 * 在 `SQLite` 安装目录下，使用 `PowerShell` 执行以下命令
     * 将 `sqlite3.dll` 文件和 `sqlite3.lib` 文件复制到 `.rustup` 目录下
-    * 根据使用的 `Rust` 工具链版本，复制到 `stable` 或 `nightly` 对应的目录下
+    * 可以根据自己使用的 `Rust` 工具链版本
+    * 将 `SQLite` 文件复制到对应的工具链目录下
+
+###### 使用本机安装的最新稳定版本工具链 `stable`
 
 ```bash
-# use rust toolchain stable version
 cp sqlite3.lib c:\Users\11441\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\lib\sqlite3.lib
-cp sqlite3.dll c:\Users\11441\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin\sqlite3.dll
+```
 
-# use rust toolchain nightly version
+```bash
+cp sqlite3.dll c:\Users\11441\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin\sqlite3.dll
+```
+
+###### 使用本机安装的最新不稳定版本工具链 `nightly`
+
+```bash
 cp sqlite3.lib c:\Users\11441\.rustup\toolchains\nightly-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\lib\sqlite3.lib
+```
+
+```bash
 cp sqlite3.dll c:\Users\11441\.rustup\toolchains\nightly-x86_64-pc-windows-msvc\bin\sqlite3.dll
+```
+
+###### 使用指定版本的工具链 `1.61.0`
+
+```bash
+cp sqlite3.lib c:\Users\11441\.rustup\toolchains\1.61-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\lib\sqlite3.lib
+```
+
+```bash
+cp sqlite3.dll c:\Users\11441\.rustup\toolchains\1.61-x86_64-pc-windows-msvc\bin\sqlite3.dll
 ```
 
 #### 生成 SQLite 数据库文件
